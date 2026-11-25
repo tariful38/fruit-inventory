@@ -22,38 +22,6 @@
 
     <div class="container">
 
-        <!-- ===== Message (success / error) ===== -->
-        <div id="message" class="alert d-none" role="alert"></div>
-
-        <!-- ===== Summary cards ===== -->
-        <div class="row g-3 mb-4">
-            <div class="col-6 col-md-3">
-                <div class="card shadow-sm text-center"><div class="card-body">
-                    <div class="text-muted small">Fruit types</div>
-                    <div class="stat-number" id="stat-total">0</div>
-                </div></div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card shadow-sm text-center"><div class="card-body">
-                    <div class="text-muted small">Inventory value</div>
-                    <div class="stat-number text-success" id="stat-value">0</div>
-                </div></div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card shadow-sm text-center"><div class="card-body">
-                    <div class="text-muted small">Low / out of stock</div>
-                    <div class="stat-number text-warning" id="stat-low">0</div>
-                </div></div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card shadow-sm text-center"><div class="card-body">
-                    <div class="text-muted small">Expiring / expired</div>
-                    <div class="stat-number text-danger" id="stat-expiring">0</div>
-                </div></div>
-            </div>
-        </div>
-
-        <!-- ===== Fruit Add / Edit Form ===== -->
         <div class="card shadow-sm mb-4">
             <div class="card-header bg-white">
                 <h5 class="mb-0" id="form-title">Add New Fruit</h5>
@@ -78,8 +46,8 @@
                             <input type="text" class="form-control" id="origin" placeholder="e.g. Rajshahi" required>
                         </div>
                         <div class="col-md-3">
-                            <label for="sku" class="form-label">SKU</label>
-                            <input type="text" class="form-control" id="sku" placeholder="e.g. MNG-001" required>
+                            <label for="sku" class="form-label">Product Code</label>
+                            <input type="text" class="form-control" id="sku" placeholder="e.g. MNG-001(Should be unique)" required>
                         </div>
 
                         <div class="col-md-3">
@@ -119,18 +87,8 @@
                         <input type="search" id="search" class="form-control form-control-sm" placeholder="Search name or SKU">
                     </div>
                     <div class="col-md-2">
-                        <select id="filter-category" class="form-select form-select-sm">
-                            <option value="">All categories</option>
-                            <option>Tropical</option><option>Citrus</option><option>Berry</option>
-                            <option>Pome</option><option>Stone</option><option>Other</option>
-                        </select>
                     </div>
                     <div class="col-md-3">
-                        <select id="filter-status" class="form-select form-select-sm">
-                            <option value="">All statuses</option>
-                            <option>In Stock</option><option>Low Stock</option><option>Out of Stock</option>
-                            <option>Expiring Soon</option><option>Expired</option>
-                        </select>
                     </div>
                 </div>
             </div>
@@ -146,7 +104,6 @@
                             </tr>
                         </thead>
                         <tbody id="fruit-table">
-                            <!-- JavaScript will add the rows here -->
                         </tbody>
                     </table>
                 </div>

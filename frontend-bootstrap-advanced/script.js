@@ -1,10 +1,4 @@
-// ==========================================
-// script.js  ->  Calls the backend API from the frontend
-// Part 1: API functions (one function per CRUD action)
-// Part 2: Page functions (read the form, draw the table, show messages)
-// ==========================================
 
-// Address of the backend.
 // "/fruits" works when the page is opened from the FastAPI server (http://127.0.0.1:8000).
 // If you open the HTML with Live Server, use: "http://127.0.0.1:8000/fruits"
 const API_URL = "/fruits";
@@ -14,7 +8,6 @@ const API_URL = "/fruits";
 // PART 1: API functions
 // ==========================================
 
-// One helper that sends the request and turns errors into a normal JavaScript Error
 async function request(url, options = {}) {
     const response = await fetch(url, options);
 
@@ -96,8 +89,6 @@ async function loadFruits() {
         // The filters are sent to the backend, which does the searching
         const fruits = await getFruits({
             search: document.getElementById("search").value.trim(),
-            category: document.getElementById("filter-category").value,
-            status: document.getElementById("filter-status").value,
         });
         showFruits(fruits);
 
@@ -141,8 +132,6 @@ function showFruits(fruits) {
             <td><strong>${f.total_value}</strong></td>
             <td><span class="badge ${getBadgeColor(f.status)}">${esc(f.status)}</span></td>
             <td class="text-nowrap">
-                <button class="btn btn-outline-success btn-sm" data-action="add" data-sku="${esc(f.sku)}" title="Add stock">+ Stock</button>
-                <button class="btn btn-outline-secondary btn-sm" data-action="remove" data-sku="${esc(f.sku)}" title="Remove stock">- Stock</button>
                 <button class="btn btn-warning btn-sm" data-action="edit" data-sku="${esc(f.sku)}">Edit</button>
                 <button class="btn btn-danger btn-sm" data-action="delete" data-sku="${esc(f.sku)}">Delete</button>
             </td>
@@ -228,27 +217,6 @@ async function handleDelete(sku) {
 }
 
 
-// ---------- + Stock / - Stock buttons -> addStock() or removeStock() ----------
-async function handleStock(sku, action) {
-    const text = prompt(action === "add" ? "How many kg to ADD?" : "How many kg to REMOVE?");
-    if (text === null) return;   // user pressed Cancel
-
-    const kg = Number(text);
-    if (!(kg > 0)) {
-        showMessage("Please enter a number greater than 0", "danger");
-        return;
-    }
-
-    try {
-        if (action === "add") await addStock(sku, kg);
-        else await removeStock(sku, kg);
-        showMessage(`${kg} kg ${action === "add" ? "added to" : "removed from"} ${sku}`, "success");
-        loadFruits();
-    } catch (error) {
-        showMessage("Error: " + error.message, "danger");
-    }
-}
-
 
 // ---------- Small helper functions ----------
 
@@ -276,12 +244,7 @@ function resetForm() {
 // Show a Bootstrap alert at the top. type = "success" (green) or "danger" (red)
 let messageTimer = null;
 function showMessage(text, type) {
-    const message = document.getElementById("message");
-    message.innerText = text;
-    message.className = "alert alert-" + type;
-
     clearTimeout(messageTimer);   // so an old timer can't hide a new message
-    messageTimer = setTimeout(() => message.classList.add("d-none"), 3000);
 }
 
 // Pick a badge color for each status
@@ -313,7 +276,6 @@ document.getElementById("fruit-table").addEventListener("click", function (event
     const action = button.dataset.action;
     if (action === "edit") startEdit(sku);
     if (action === "delete") handleDelete(sku);
-    if (action === "add" || action === "remove") handleStock(sku, action);
 });
 
 // Search while typing (waits 300 ms after the last key so we don't call the API on every letter)
@@ -322,8 +284,6 @@ document.getElementById("search").addEventListener("input", function () {
     clearTimeout(searchTimer);
     searchTimer = setTimeout(loadFruits, 300);
 });
-document.getElementById("filter-category").addEventListener("change", loadFruits);
-document.getElementById("filter-status").addEventListener("change", loadFruits);
 
 // Load the fruit list as soon as the page opens
 loadFruits();
