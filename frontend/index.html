@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fruit Inventory</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-4">
+
+    <h1 class="mb-4">Fruit Inventory</h1>
+
+    <!-- ===== Form ===== -->
+    <h3 id="form-title">Add Fruit</h3>
+
+    <form id="fruit-form">
+        <label>Name</label>
+        <input type="text" id="name" class="form-control mb-2" required>
+
+        <label>Category</label>
+        <select id="category" class="form-select mb-2" required>
+            <option>Tropical</option>
+            <option>Citrus</option>
+            <option>Berry</option>
+            <option>Pome</option>
+            <option>Stone</option>
+            <option>Other</option>
+        </select>
+
+        <label>Origin</label>
+        <input type="text" id="origin" class="form-control mb-2" required>
+
+        <label>SKU (e.g. APL-001)</label>
+        <input type="text" id="sku" class="form-control mb-2" required>
+
+        <label>Quantity (kg)</label>
+        <input type="number" step="0.01" min="0" id="quantity" class="form-control mb-2" required>
+
+        <label>Price per kg</label>
+        <input type="number" step="0.01" min="0.01" id="price" class="form-control mb-2" required>
+
+        <label>Reorder level (kg)</label>
+        <input type="number" step="0.01" min="0" id="reorder" class="form-control mb-2" value="10">
+
+        <label>Expiry date</label>
+        <input type="date" id="expiry" class="form-control mb-3" required>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+
+    <!-- ===== Table ===== -->
+    <h3 class="mt-5">All Fruits</h3>
+    <input type="search" id="search" class="form-control mb-3" placeholder="Search by name or SKU">
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>SKU</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Origin</th>
+                <th>Qty (kg)</th>
+                <th>Price/kg</th>
+                <th>Reorder</th>
+                <th>Expiry</th>
+                <th>Total Value</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="fruit-table"></tbody>
+    </table>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
